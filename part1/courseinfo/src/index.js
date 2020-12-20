@@ -2,10 +2,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Header = ({course}) =>{
+const Header = (props) =>{
   return(
     <div>
-      <h1>{course.name}</h1>
+      <h1>{props.value.name}</h1>
     </div>
   )
 }
@@ -13,10 +13,9 @@ const Header = ({course}) =>{
 const Content = (props) =>{
   return(
     <div>
-    <Part name={props.parts[0].name} work={props.parts[0].exercises}/>
-    <Part name={props.parts[1].name} work={props.parts[1].exercises}/>
-    <Part name={props.parts[2].name} work={props.parts[2].exercises}/> 
-    
+    <Part title={props.value.parts[0]} work={props.value.parts[0]}/>
+    <Part title={props.value.parts[1]} work={props.value.parts[1]}/>
+    <Part title={props.value.parts[2]} work={props.value.parts[2]}/> 
     </div>
   )
 }
@@ -24,7 +23,7 @@ const Content = (props) =>{
 const Part = (props) =>{
   return(
     <div>
-      <p>{props.name} {props.work}</p>
+      <p>{props.title.name} {props.work.exercises}</p>
     </div>
   )
 }
@@ -32,7 +31,7 @@ const Part = (props) =>{
 const Total = (props) =>{
   return(
     <div>
-      <p>Number of exercise {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
+      <p>Number of exercise {props.value.parts[0].exercises + props.value.parts[1].exercises + props.value.parts[2].exercises}</p>
     </div>
   )
 }
@@ -57,12 +56,11 @@ const App = () => {
     ]
   }
   
-  console.log(course);
   return (
     <div>      
-      <Header course={course} />
-      <Content course={course}/>
-      <Total course={course} />
+      <Header value={course} />
+      <Content value={course}/>
+      <Total value={course} />
     </div>
   )
   
