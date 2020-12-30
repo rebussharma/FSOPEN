@@ -1,34 +1,33 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-
-const points = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
-const copy = {...points}
-var max_votes = 0
-
 const Anecdote = (props) => {
   return(
     <div>
       <h1> Anecdote of the day is </h1>
-      <p> {props.text} {props.vote} </p>
+      <p> {props.text} </p>  <p> with {props.vote} votes</p>
       <h1> Anecdote with highest vote is </h1>
-      <p> {props.text} {props.vote} </p>
+      <p> {props.text} </p>  <p> with {props.vote} votes</p>
     </div>
   )
 }
-Array.max = function( array ){
-  return Math.max.apply( Math, array );
-};
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
-  //const [vote, setVote] = useState(0)
+  const [vote, setVote] = useState({})
+  const [highest, setHighest] = useState(0)
 
   const handlevotes = () => {
+    console.log(selected);
+    const copy = [...vote]
+    console.log("here");
     copy[selected] += 1
-    max_votes = Object.keys(copy).reduce((a, b) => copy[a] > copy[b] ? a : b)
-    return max_votes
+    console.log(copy);
+    setHighest(selected)
+    setVote(copy)
   }
+
+
 
   return (
     <div>
