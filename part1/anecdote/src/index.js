@@ -1,40 +1,60 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Anecdote = (props) => {
+const Anecdote = ({text, vote=0}) => {
   return(
     <div>
-      <h1> Anecdote of the day is </h1>
-      <p> {props.text} </p>  <p> with {props.vote} votes</p>
-      <h1> Anecdote with highest vote is </h1>
-      <p> {props.text} </p>  <p> with {props.vote} votes</p>
+      <p> {text} </p> 
+      <p> with {vote} votes</p>
     </div>
   )
 }
 
 const App = (props) => {
+  // state to store selected random state
   const [selected, setSelected] = useState(0)
-  const [vote, setVote] = useState({})
+  // Array state to store total number of votes
+  const [vote, setVote] = useState([])
+  //state to store the anecdote with highest votes
   const [highest, setHighest] = useState(0)
 
+  /* function to handle onClick vote event*/
   const handlevotes = () => {
-    console.log(selected);
-    const copy = [...vote]
-    console.log("here");
+    // make a copy of vote array for comparision between 2 vote arrays
+    const copy = [ ...vote,[]]
+    
+    // parse element selected as int
+    copy[selected] = parseInt(copy[selected])
+
+    // if Non number set state to 0
+    if (isNaN(copy[selected])){
+      copy[selected] = 0;
+    }
+
+    // add 1 for everytime state is voted
     copy[selected] += 1
-    console.log(copy);
-    setHighest(selected)
+
+    // compare 2 vote arrays here
+    // if selected state has more votes than highest state change highes
+    if (copy[selected] > vote[highest]){
+      setHighest(selected)
+    }
+
+    // copy is a copy of vote. Update vote array each
     setVote(copy)
+
   }
-
-
 
   return (
     <div>
-      <Anecdote text={props.quotes[selected]} vote={1} />
+      <h1> Anecdote of the day is </h1>
+      <Anecdote text={props.quotes[selected]} vote={vote[selected]} />
+      <h2> Anecdote with highest vote is </h2>
+      <Anecdote text={props.quotes[highest]} vote={vote[highest]} />
       <br></br>
       <button onClick={() => setSelected(Math.floor(Math.random()*anecdotes.length))}>next quote</button>
       <button onClick={() => handlevotes()}>vote</button>
+
     </div>
   )
 }
