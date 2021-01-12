@@ -20,6 +20,10 @@ const Guru = ({courses}) =>{
   const Content = ({courses}) =>{
     return(
       <div>
+          {/* if <Part is NOT used inside map(), Part will be rendered in single line
+                Here Part will be rendered in different lines: map((param) => <Part key={} props={}/>)
+                KEY is a MUST in map by default
+          */}
         {courses.parts.map((myparts) => 
             <Part key={myparts.id} title={myparts} work={myparts} />
         )}
@@ -38,6 +42,7 @@ const Guru = ({courses}) =>{
   }
   
   const Total = ({courses}) =>{
+      // the 0 at last is the initial value of sum
     var total = courses.parts.reduce((sum, cost) => sum + cost.exercises, 0)
     return(
       <div>
@@ -112,7 +117,7 @@ const Guru = ({courses}) =>{
     
     return (
       <div>
-        {
+        { // map is used to iterate over array indexes
           courses.map((course_num) =>  <Guru key={course_num.id} courses={course_num} />)
         }    
         
