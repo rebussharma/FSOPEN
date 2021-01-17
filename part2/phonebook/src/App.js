@@ -1,4 +1,7 @@
 import React, { useState , useEffect} from 'react'
+import Filter from './components/Filter'
+import PersonForm from './components/Personform'
+import Contact from './components/Contacts'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
@@ -62,34 +65,19 @@ const App = () => {
     if(typeof(filteredName) !== 'string'){
       filteredName = [ ...new Set(filteredName.map(a => a.name))];
       setSearchName(filteredName)
-   }
-   console.log("here");
+    }
     setNewSearch(event.target.value)
   }
   
 
   return (
     <div>
-      <h2>Search for contact</h2>
-        <div>
-          search by name: <input value={newSearchName} onChange={handleSearchChange} />
-        </div>
-      <form>
-        <h2>Add New Contact</h2>
-        <div>
-          name: <input value={newName} onChange={handleChange}/>
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit" onClick={handleClick}>add</button>
-        </div>
-      </form>
-      <h2>Contacts</h2> 
-      {searchName.map(contact => <p key={contact} > {contact} </p>)}
+      <Filter value={newSearchName} onChange={handleSearchChange} />
+      <PersonForm valueName={newName} valueNumber={newNumber} onChangeName={handleChange} onChangeNumber={handleNumberChange} onClick={handleClick} />
+      <h2>Contacts</h2>
+      {searchName.map((contact) => <Contact key={contact} name={contact} />)}
 
-      {/* {
+      {/* { map all the persons
         persons.map(contact => <p key={contact.name} > {contact.name} {contact.number}</p>)
       } */}
     </div>
